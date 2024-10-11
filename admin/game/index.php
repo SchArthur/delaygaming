@@ -81,10 +81,10 @@ $recordset = $stmt->fetchAll();
                                 <a href="#">
                                     <i class='bx bx-show'></i>  
                                 </a>
-                                <a href="#">
+                                <a href="form.php?id=<?= hsc($row["game_id"]); ?>">
                                     <i class='bx bx-edit'></i>
                                 </a>
-                                <a href="delete.php?id=<?= hsc($row["game_id"]) ?>">
+                                <a href="delete.php?id=<?= hsc($row["game_id"]); ?>">
                                     <i class='bx bx-trash'></i>
                                 </a>
                             </td>
