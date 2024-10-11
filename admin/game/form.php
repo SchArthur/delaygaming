@@ -47,7 +47,7 @@ $game_price = 0;
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" id="post_id" name="post_id" value="toto">
+                            <input type="hidden" id="post_sent" name="post_sent" value="toto">
                             <input type="submit" value="Ajouter" class="btn btn-primary">
                         </div>
                     </div>
