@@ -6,7 +6,7 @@ function redirect($path){
 }
 
 function hsc($string){
-    if (empty($string)){
+    if (is_null($string)){
         return "";
     }else{
         return htmlspecialchars($string);
