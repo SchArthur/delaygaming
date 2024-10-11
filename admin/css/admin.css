@@ -59,7 +59,7 @@ table a{
     left: 0px;
 }
 /* FORM */
-form select, form input{
+form select, form input, form textarea{
     color: var(--color-text);
 }
 

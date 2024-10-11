@@ -11,6 +11,24 @@ $game_name = "";
 $game_description = "";
 $game_editor = "";
 $game_price = 0;
+$game_id = 0;
+
+$button_value = "Ajouter";
+
+if (isset($_GET["id"]) && is_numeric($_GET["id"])){
+    $stmt = $db->prepare("SELECT * FROM table_game WHERE game_id = :id");
+    $stmt->execute([":id" => $_GET["id"]]);
+
+    if ($row = $stmt->fetch()){
+        $game_name = $row["game_name"];
+        $game_description = $row["game_description"];
+        $game_editor = $row["game_editor"];
+        $game_price = $row["game_price"];
+        $game_id = $row["game_id"];
+
+        $button_value = "Modifier";
+    }
+}
 ?>
             <div class="container-fluid">
                 <form action="process.php" method="POST">
@@ -26,7 +44,7 @@ $game_price = 0;
                                     <hr>
                                     <div>
                                         <label for="game_description">Description</label><br/>
-                                        <textarea name="game_description" id="game_description" cols="30" rows="10" value="<?= hsc($game_description); ?>"></textarea>
+                                        <textarea name="game_description" id="game_description" cols="30" rows="10"><?= hsc($game_description); ?></textarea>
                                     </div>
                                     <hr>
                                 </div>
@@ -48,7 +66,8 @@ $game_price = 0;
                         </div>
                         <div class="col-2">
                             <input type="hidden" id="post_sent" name="post_sent" value="toto">
-                            <input type="submit" value="Ajouter" class="btn btn-primary">
+                            <input type="hidden" id="game_id" name="game_id" value="<?= hsc($game_id); ?>">
+                            <input type="submit" value="<?= $button_value; ?>" class="btn btn-primary">
                         </div>
                     </div>
                 </form>

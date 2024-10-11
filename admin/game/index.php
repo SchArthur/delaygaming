@@ -75,7 +75,7 @@ $recordset = $stmt->fetchAll();
                         <tr>
                             <td><?= hsc($row["game_name"]); ?></td>
                             <td><?= hsc($row["game_editor"]); ?></td>
-                            <td><?= hsc($row["game_price"]); ?></td>
+                            <td><?= hsc($row["game_price"]) . ' €'; ?></td>
                             <td><?= hsc($row["game_status"]); ?></td>
                             <td>
                                 <a href="#">
