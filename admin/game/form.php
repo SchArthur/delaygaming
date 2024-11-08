@@ -12,6 +12,7 @@ $game_description = "";
 $game_editor = "";
 $game_price = 0;
 $game_id = 0;
+$game_image = "";
 
 $button_value = "Ajouter";
 
@@ -25,6 +26,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
         $game_editor = $row["game_editor"];
         $game_price = $row["game_price"];
         $game_id = $row["game_id"];
+        $game_image = $row["game_image"];
 
         $button_value = "Modifier";
     }
@@ -50,6 +52,10 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
                                 </div>
                                 <!-- Données -->
                                 <div class="col-4">
+                                    <div>
+                                        <label for="game_image">Image principale</label><br/>
+                                        <input type="file" name="game_image" id="game_image" value="<?= hsc($game_image); ?>" require/>
+                                    </div>
                                     <div>
                                         <label for="game_editor">Editor</label><br/>
                                         <input type="text" name="game_editor" id="game_editor" value="<?= hsc($game_editor); ?>" required autocomplete="off"/>

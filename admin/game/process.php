@@ -4,6 +4,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/connect.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/protection.php';
 
 
+
+exit();
 if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")){
     if ($_POST["game_id"] == 0){
         $stmt = $db->prepare("INSERT INTO table_game (game_name, game_description, game_editor, game_price, game_type) VALUES (:game_name, :game_description, :game_editor, :game_price, :game_type)");
