@@ -33,7 +33,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
 }
 ?>
             <div class="container-fluid">
-                <form action="process.php" method="POST">
+                <form action="process.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-10 ajout_article">
                             <div class="row">
