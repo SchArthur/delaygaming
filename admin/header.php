@@ -27,22 +27,6 @@
                 <span>Articles</span>
                 <i class='bx bx-package'></i>
             </a>
-            <a href="#">
-                <span>Clients</span>
-                <i class='bx bxs-contact'></i>
-            </a>
-            <a href="#">
-                <span>Personnel</span>
-                <i class='bx bx-id-card' ></i>
-            </a>
-            <a href="#">
-                <span>Livraisons</span>
-                <i class='bx bxs-truck' undefined ></i>
-            </a>
-            <a href="#">
-                <span>Offres</span>
-                <i class='bx bx-purchase-tag'></i>
-            </a>
             <a href="#" class="settings">
                 <span>Paramètres</span>
                 <i class='bx bx-cog'></i>

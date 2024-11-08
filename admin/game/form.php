@@ -51,7 +51,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
                                 <!-- Données -->
                                 <div class="col-4">
                                     <div>
-                                        <label for="game_editor">Editeur</label><br/>
+                                        <label for="game_editor">Editor</label><br/>
                                         <input type="text" name="game_editor" id="game_editor" value="<?= hsc($game_editor); ?>" required autocomplete="off"/>
                                     </div>
                                     <hr>
@@ -59,6 +59,17 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
                                         <label for="game_price">Prix</label><br/>
                                         <input type="number" id="game_price" name="game_price" min="0.00" step="0.01" value="<?= hsc($game_price); ?>" required autocomplete="off"/>
                                         <span>€</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <!-- INFOS -->
+                                <div class="col-4">
+                                    <div>
+                                        <label for="game_type">Type :</label>
+                                        <select name="game_type" id="game_type">
+                                            <option value="0">Jeu</option>
+                                            <option value="1">DLC</option>
+                                        </select>
                                     </div>
                                     <hr>
                                 </div>
