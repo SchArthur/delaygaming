@@ -54,7 +54,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])){
                                 <div class="col-4">
                                     <div>
                                         <label for="game_image">Image principale</label><br/>
-                                        <input type="file" name="game_image" id="game_image" value="<?= hsc($game_image); ?>" require/>
+                                        <input type="file" name="game_image" id="game_image" accept="image/png, image/jpeg, image/gif, image/webp" value="<?= hsc($game_image); ?>" require/>
                                     </div>
                                     <div>
                                         <label for="game_editor">Editor</label><br/>
