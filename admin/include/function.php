@@ -27,7 +27,8 @@ function cleanFilename($file_name){
 }
 
 function checkFilename($file_name){
-    global $prefix;
+    global $img_format;
+    $prefix = array_key_first($img_format);
     $result = $file_name;
 
     $cpt = 1;
