@@ -27,12 +27,19 @@ function cleanFilename($file_name){
 }
 
 function checkFilename($file_name){
+    global $prefix;
     $result = $file_name;
 
     $cpt = 1;
-    while (file_exists($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $result . ($cpt>1 ? "_(" .$cpt. ")" : "") . ".webp")){
+    while (file_exists($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $result . ($cpt>1 ? "_(" .$cpt. ")" : "") . ".webp")){
         $cpt++;
     }
 
     return $result . ($cpt>1 ? "_(" .$cpt. ")" : "");
+}
+
+function deleteFile($fullpath){
+    if (file_exists($fullpath)){
+        unlink($fullpath);
+    }
 }

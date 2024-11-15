@@ -13,9 +13,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/protection.php';
 $path = $_SERVER["DOCUMENT_ROOT"] . "/upload/";
 
 //Format d'image de dimension
-$dest_width = 800;
-$dest_height = 600;
+$dest_width = 400;
+$dest_height = 400;
 $prefix = "lg_";
+$crop = true;
 
 if(isset($_FILES["game_image"])){
     if(isset($_FILES["game_image"]) && $_FILES["game_image"]["error"] == 0){
@@ -43,7 +44,7 @@ if(isset($_FILES["game_image"])){
         
         if ($sizes = getimagesize($path . $file)){
             var_dump($sizes);
-    
+            
             $src_width = $sizes[0];
             $src_height = $sizes[1];
         } else {
@@ -51,46 +52,62 @@ if(isset($_FILES["game_image"])){
         }
 
         if ($src_width > $dest_width || $src_height > $dest_height) {
-            if ($src_width > $src_height) {
-                // Image au format PAYSAGE
-                $dest_height = round($src_height * $dest_width / $src_width);
-            } else {
-                // Image au format PORTRAIT
-                $dest_width = round($src_width * $dest_height / $src_height);
-            }
-
-            // Créer une image à la nouvelle dimension
-            $dest = imagecreatetruecolor($dest_width, $dest_height);
-
-            switch ($extension){
-                case "jpeg":
-                case "jpg":
-                    $src = imagecreatefromjpeg($path . $file);
-                    break;
-                case "png":
-                    $src = imagecreatefrompng($path . $file);
-                    break;
-                case "gif":
-                    $src = imagecreatefromgif($path . $file);
-                    break;
-                case "webp":
-                    $src = imagecreatefromwebp($path . $file);
-                    break;
-                default:
-                    exit();   
+            if (!$crop) {
+                if ($src_width > $src_height) {
+                    // Image au format PAYSAGE
+                    $dest_height = round($src_height * $dest_width / $src_width);
+                } else {
+                    // Image au format PORTRAIT
+                    $dest_width = round($src_width * $dest_height / $src_height);
                 }
-
-            imagecopyresampled($dest, $src,0,0,0,0,$dest_width, $dest_height, $src_width, $src_height);
-
-            imagewebp($dest, $path . $prefix . $game_image . ".webp", 100);
-
+            }
         } else {
-            // $dest = imagecreatetruecolor($src_width, $src_height);
+            $dest_height = $src_height;
+            $dest_width = $src_width;
+
+            // Dans le cas où l'image est plus petite que la taille demandée, on ne crop pas.
+            $crop = false;
         }
 
-        /* 
-        
-        Gerer l'image trop petite
+        // Créer une image à la nouvelle dimension
+        $dest = imagecreatetruecolor($dest_width, $dest_height);
+
+        switch ($extension){
+            case "jpeg":
+            case "jpg":
+                $src = imagecreatefromjpeg($path . $file);
+                break;
+            case "png":
+                $src = imagecreatefrompng($path . $file);
+                break;
+            case "gif":
+                $src = imagecreatefromgif($path . $file);
+                break;
+            case "webp":
+                $src = imagecreatefromwebp($path . $file);
+                break;
+            default:
+                exit();   
+            }
+
+            
+        if (!$crop){
+            imagecopyresampled($dest, $src,0,0,0,0,$dest_width, $dest_height, $src_width, $src_height);
+        } else {
+            if ($src_width > $src_height){
+                //PAYSAGE
+                imagecopyresampled($dest,$src, 0,0, round(($src_width - $src_height) / 2), 0,$dest_width, $dest_height, $src_height, $src_height);
+            } else {
+                //PORTRAIT
+                imagecopyresampled($dest,$src, 0,0, 0, round(($src_height - $src_width) / 2),$dest_width, $dest_height, $src_width, $src_width);
+            }
+        }
+
+        imagewebp($dest, $path . $prefix . $game_image . ".webp", 100);
+
+        deleteFile($path . $file);
+
+        /*
 
         Intergrer le cas ou crop ou non
 
@@ -99,11 +116,6 @@ if(isset($_FILES["game_image"])){
         S'assurer que cela soit réutilisable
 
         */
-
-
-
-        // if file_exists();
-        // unlink();
     }
 }
 
