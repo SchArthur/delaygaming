@@ -34,17 +34,17 @@ if(isset($_FILES["game_image"])){
             }
         }
 
-        $game_image = $_POST["game_name"];
-        $game_image = cleanFilename($game_image);
-        $game_image = checkFilename($game_image);
+        $image = $_POST["game_name"];
+        $image = cleanFilename($image);
+        $image = checkFilename($image);
 
-        $file = $game_image . "." . $extension;
+        $file = $image . "." . $extension;
 
         move_uploaded_file($_FILES["game_image"]["tmp_name"], $path . $file);
 
         $src_file = $file;
         
-        foreach ($img_format as $prefix => $info){
+        foreach ($img_format as $folder => $info){
 
             $dest_width = $info["width"];
             $dest_height = $info["height"];
@@ -110,11 +110,11 @@ if(isset($_FILES["game_image"])){
                 }
             }
 
-            imagewebp($dest, $path . $prefix . $game_image . ".webp", 100);
+            imagewebp($dest, $path . $folder . $image . ".webp", 100);
 
             if (!$crop){
                 $extension = "webp";
-                $src_file = $prefix . $game_image . "." . $extension;
+                $src_file = $folder . $image . "." . $extension;
             }
         }
 
@@ -138,7 +138,7 @@ if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")){
                                 ":game_editor" => $_POST["game_editor"],
                                 ":game_price" => $_POST["game_price"],
                                 ":game_type" => $_POST["game_type"],
-                                ":game_image" => $game_image . ".webp" ]);
+                                ":game_image" => $image . ".webp" ]);
     } else {
         $stmt = $db->prepare("UPDATE table_game SET game_name = :game_name, game_description = :game_description, game_editor = :game_editor, game_price = :game_price, game_type = :game_type, game_image = :game_image WHERE game_id = :game_id");
         $stmt->bindValue(":game_name", $_POST["game_name"]);
@@ -147,7 +147,7 @@ if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")){
         $stmt->bindValue(":game_price", $_POST["game_price"]);
         $stmt->bindValue(":game_id", $_POST["game_id"]);
         $stmt->bindValue(":game_type", $_POST["game_type"]);
-        $stmt->bindValue(":game_image", $game_image . ".webp");
+        $stmt->bindValue(":game_image", $image . ".webp");
 
         $stmt->execute();
     }
