@@ -2,10 +2,10 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/function.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/connect.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/protection.php';
-
 $title = "Jeux";
 $h1 = "Liste des jeux";
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/header.php';
+
 $stmt = $db->prepare("SELECT * FROM table_game");
 $stmt->execute();
 
@@ -67,9 +67,11 @@ $recordset = $stmt->fetchAll();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($recordset as $row){?>
+                    <?php foreach($recordset as $row){
+                        $item = new Game($row);
+                        ?>
                         <tr>
-                            <td><?= hsc($row["game_name"]); ?></td>
+                            <td><?= $item->getName(); ?></td>
                             <td><?= hsc($row["game_editor"]); ?></td>
                             <td><?= hsc($row["game_price"]) . ' €'; ?></td>
                             <td><?= hsc($row["game_status"]); ?></td>

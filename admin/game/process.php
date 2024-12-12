@@ -1,10 +1,5 @@
 <?php
 
-/*
-OBJECTIF :
-Créer une image 800:600
-*/
-
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/function.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/connect.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/protection.php';
@@ -19,7 +14,8 @@ $img_format = [
     "sm_" => ["width" => 400, "height" => 400, "crop" => true],
     "xs_" => ["width" => 200, "height" => 150, "crop" => false]
     ] ;
-
+    
+/* 
 if(isset($_FILES["game_image"])){
     if(isset($_FILES["game_image"]) && $_FILES["game_image"]["error"] == 0){
         $extension = strtolower(pathinfo($_FILES["game_image"]["name"], PATHINFO_EXTENSION));
@@ -119,19 +115,25 @@ if(isset($_FILES["game_image"])){
         }
 
         deleteFile($path . $file);
-
-        /*
-
-        Répetition en fonction du nombre d'image
-
-        S'assurer que cela soit réutilisable
-
-        */
     }
 }
+ */
 
 if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")){
-    if ($_POST["game_id"] == 0){
+
+    if(isset($_POST["game_id"]) && $_POST["game_id"] > 0){
+        if ($row = $stmt->fetch()){
+            $game = new Game($row);
+        } else {
+            $game = new Game();
+        }
+    } else {
+        $game = new Game();
+    }
+
+    $game->hydrate($_POST);
+
+    /* if ($_POST["game_id"] == 0){
         $stmt = $db->prepare("INSERT INTO table_game (game_name, game_description, game_editor, game_price, game_type, game_image) VALUES (:game_name, :game_description, :game_editor, :game_price, :game_type, :game_image)");
         $stmt->execute([":game_name" => $_POST["game_name"],
                                 ":game_description" => $_POST["game_description"],
@@ -150,7 +152,7 @@ if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")){
         $stmt->bindValue(":game_image", $image . ".webp");
 
         $stmt->execute();
-    }
+    } */
 }
 redirect("index.php");
 ?>
