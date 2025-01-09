@@ -18,7 +18,7 @@ $img_format = [
 
 if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")) {
     if (isset($_POST["game_id"]) && $_POST["game_id"] > 0) {
-        if ($row = $stmt->fetch()) {
+        if ($row = (new GameManager())->selectOne($_POST["game_id"])) {
             $game = new Game($row);
         } else {
             $game = new Game();
