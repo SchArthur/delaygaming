@@ -11,8 +11,8 @@ class GameManager
 
     public function selectOne(int $id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM table_game WHERE game_id = :id");
-        $stmt->execute([":id" => $id]);
+        $stmt = $this->db->prepare("SELECT * FROM table_game WHERE game_id = :game_id");
+        $stmt->execute([":game_id" => $id]);
         if ($row = $stmt->fetch()) {
             return $row;
         }
@@ -22,12 +22,14 @@ class GameManager
     public function delete(Game $game)
     {
         if ($game->getImage() != "") {
-            foreach (Game::IMG_FORMAT as $prefix => $info){
-                deleteFile($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage());
+            foreach (Game::IMG_FORMAT as $prefix => $data){
+                if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage())) {
+                    unlink($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage());
+                }
             }
         }
-        $stmt = $this->db->prepare("DELETE FROM table_game WHERE game_id = :id");
-        $stmt->execute([":id" => $game->getId()]);
+        $stmt = $this->db->prepare("DELETE FROM table_game WHERE game_id = :game_id");
+        $stmt->execute([":game_id" => $game->getId()]);
     }
 
     public function save(Game $game)
