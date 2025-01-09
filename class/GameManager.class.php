@@ -22,7 +22,9 @@ class GameManager
     public function delete(Game $game)
     {
         if ($game->getImage() != "") {
-            //Supp fichiers images
+            foreach (Game::IMG_FORMAT as $prefix => $info){
+                deleteFile($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage());
+            }
         }
         $stmt = $this->db->prepare("DELETE FROM table_game WHERE game_id = :id");
         $stmt->execute([":id" => $game->getId()]);
@@ -48,19 +50,20 @@ class GameManager
             :game_price, :game_stock, :game_image, :game_rating, 
             :game_players, :game_status, :game_type
         )
-    ");
-    $stmt->bindValue(":game_name", $game->getName(true));
-    $stmt->bindValue(":game_editor", $game->getEditor(true));
-    $stmt->bindValue(":game_date", $game->getDate(true));
-    $stmt->bindValue(":game_description", $game->getDescription(true));
-    $stmt->bindValue(":game_price", $game->getPrice(true));
-    $stmt->bindValue(":game_stock", $game->getStock(true));
-    $stmt->bindValue(":game_image", $game->getImage(true));
-    $stmt->bindValue(":game_rating", $game->getRating(true));
-    $stmt->bindValue(":game_players", $game->getPlayers(true));
-    $stmt->bindValue(":game_status", $game->getStatus(true));
-    $stmt->bindValue(":game_type", $game->getType(true));
-    $stmt->execute();
+        ");
+
+        $stmt->bindValue(":game_name", $game->getName(true));
+        $stmt->bindValue(":game_editor", $game->getEditor(true));
+        $stmt->bindValue(":game_date", $game->getDate(true));
+        $stmt->bindValue(":game_description", $game->getDescription(true));
+        $stmt->bindValue(":game_price", $game->getPrice(true));
+        $stmt->bindValue(":game_stock", $game->getStock(true));
+        $stmt->bindValue(":game_image", $game->getImage(true));
+        $stmt->bindValue(":game_rating", $game->getRating(true));
+        $stmt->bindValue(":game_players", $game->getPlayers(true));
+        $stmt->bindValue(":game_status", $game->getStatus(true));
+        $stmt->bindValue(":game_type", $game->getType(true));
+        $stmt->execute();
     }
 
     private function update(Game $game)
@@ -79,23 +82,24 @@ class GameManager
             game_type = :game_type
         WHERE
             game_id = :game_id
-    ");
-    $stmt->bindValue(":game_name", $game->getName(true));
-    $stmt->bindValue(":game_editor", $game->getEditor(true));
-    $stmt->bindValue(":game_date", $game->getDate(true));
-    $stmt->bindValue(":game_description", $game->getDescription(true));
-    $stmt->bindValue(":game_price", $game->getPrice(true));
-    $stmt->bindValue(":game_stock", $game->getStock(true));
-    $stmt->bindValue(":game_image", $game->getImage(true));
-    $stmt->bindValue(":game_rating", $game->getRating(true));
-    $stmt->bindValue(":game_players", $game->getPlayers(true));
-    $stmt->bindValue(":game_status", $game->getStatus(true));
-    $stmt->bindValue(":game_type", $game->getType(true));
-    $stmt->bindValue(":game_id", $game->getId(true));
-    $stmt->execute();
+        ");
+
+        $stmt->bindValue(":game_name", $game->getName(true));
+        $stmt->bindValue(":game_editor", $game->getEditor(true));
+        $stmt->bindValue(":game_date", $game->getDate(true));
+        $stmt->bindValue(":game_description", $game->getDescription(true));
+        $stmt->bindValue(":game_price", $game->getPrice(true));
+        $stmt->bindValue(":game_stock", $game->getStock(true));
+        $stmt->bindValue(":game_image", $game->getImage(true));
+        $stmt->bindValue(":game_rating", $game->getRating(true));
+        $stmt->bindValue(":game_players", $game->getPlayers(true));
+        $stmt->bindValue(":game_status", $game->getStatus(true));
+        $stmt->bindValue(":game_type", $game->getType(true));
+        $stmt->bindValue(":game_id", $game->getId(true));
+        $stmt->execute();
     }
 
-    
+
 
     private function connect()
     {

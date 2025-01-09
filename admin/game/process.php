@@ -8,12 +8,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/include/protection.php';
 $path = $_SERVER["DOCUMENT_ROOT"] . "/upload/";
 
 //Format d'image de dimension
-$img_format = [
-    "lg_" => ["width" => 1200, "height" => 900, "crop" => false],
-    "md_" => ["width" => 800, "height" => 600, "crop" => false],
-    "sm_" => ["width" => 400, "height" => 400, "crop" => true],
-    "xs_" => ["width" => 200, "height" => 150, "crop" => false]
-];
+$img_format = Game::IMG_FORMAT;
 
 
 if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")) {
