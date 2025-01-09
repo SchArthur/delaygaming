@@ -38,6 +38,14 @@ if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")) {
                 }
             }
 
+            if ($game->getImage() != "") {
+                foreach (Game::IMG_FORMAT as $prefix => $data){
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage())) {
+                        unlink($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage());
+                    }
+                }
+            }
+
             $image = $_POST["game_name"];
             $image = cleanFilename($image);
             $image = checkFilename($image);
@@ -123,14 +131,6 @@ if (isset($_POST["post_sent"]) && ($_POST["post_sent"] == "toto")) {
             }
 
             deleteFile($path . $file);
-
-            if ($game->getImage() != "") {
-                foreach (Game::IMG_FORMAT as $prefix => $data){
-                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage())) {
-                        unlink($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $prefix . $game->getImage());
-                    }
-                }
-            }
 
             $game->setImage($image . ".webp");
         }
